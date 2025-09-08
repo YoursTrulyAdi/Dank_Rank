@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { auth } from "../../firebase/firebase"; // use this only
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
+    getAuth,
     signInWithEmailAndPassword,
     GoogleAuthProvider,
     signInWithPopup,
@@ -10,6 +12,8 @@ import {
 function UserSignIn() {
     //initializing the navigate functions
     const navigate = useNavigate();
+
+    const auth = getAuth();
 
     const [formData, setFormData] = useState({
         email: "",
@@ -24,9 +28,15 @@ function UserSignIn() {
         e.preventDefault();
 
         try {
-            await signInWithEmailAndPassword(auth, formData.email, formData.password);
+            const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+            const user = userCredential.user;
+            const firebaseToken = await user.getIdToken();
 
             navigate("/user/dashboard");
+
+            // Exchange Firebase token for your backend JWT
+            const response = await axios.post("http://localhost:5000/auth/token", { firebaseToken });
+            return response.data.jwt;
 
         } catch (error) {
             console.error("Email and Password Singup failed", error.code, error.message);
@@ -39,9 +49,14 @@ function UserSignIn() {
             const provider = new GoogleAuthProvider();
             const result = await signInWithPopup(auth, provider);
 
-            // Access user info
-            console.log("Google Sign-In successful!");
+            const user = result.user;
+            const firebaseToken = await user.getIdToken();
+
             navigate("/user/dashboard");
+
+            const response = await axios.post("http://localhost:5000/auth/token", { firebaseToken });
+            return response.data.jwt;
+
         } catch (error) {
             console.error("Google Sign-In failed:", error.code, error.message);
             alert(`Error: Incorrect Input`); // optional: show error to user

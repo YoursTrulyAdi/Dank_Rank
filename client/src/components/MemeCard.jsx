@@ -22,7 +22,7 @@ function MemeCard({ meme, onUpvote, onDownvote }) {
 
             <div className="flex items-center space-x-4">
                 <button className="text-green-500 hover:text-green-700" onClick={() => onUpvote(meme.id)}>
-                    <img src={upArrow} alt="" className="w-7 transition-transform duration-300 hover:scale-115 cursor-pointer"/>
+                    <img src={upArrow} alt="" className="w-7 transition-transform duration-300 hover:scale-115 cursor-pointer" />
                 </button>
                 <span className="font-semibold text-2xl">{meme.voteCount || 0}</span>
                 <button className="text-red-500 hover:text-red-700" onClick={() => onDownvote(meme.id)}>

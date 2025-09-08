@@ -3,6 +3,7 @@ import Navbar from "../components/NavBar";
 import MemeCard from "../components/MemeCard";
 import { db } from "../../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import LeaderboardCard from "../components/LeaderboardCard";
 
 
 function HomePage() {
@@ -31,19 +32,17 @@ function HomePage() {
     }, []);
 
     const handleUpvote = (id) => {
-        console.log("Upvote:", id);
-        // You can update Firestore here if needed
+        alert("Please Sign In To Cast Your Vote.")
     };
 
     const handleDownvote = (id) => {
-        console.log("Downvote:", id);
-        // You can update Firestore here if needed
+        alert("Please Sign In To Cast Your Vote.")
     };
 
     if (loading) return <p>Loading memes...</p>;
 
     return (
-        <div scroll-hide>
+        <div scroll-hide="true">
             {/* Navbar */}
             <Navbar />
 
@@ -54,15 +53,15 @@ function HomePage() {
                     {/* Profile */}
                     <div className="h-[85vh] basis-[30%]">
                         <div className="bg-[#191830] p-6 shadow-md text-center h-auto rounded-xl">
-                            <h3 className="text-xl font-semibold mb-2">Profile</h3>
+                            <h3 className="text-2xl font-semibold mb-2">Profile</h3>
                             <p className="text-gray-600 dark:text-gray-400">
-                                View or update your account details.
+                                Sign In / Sign Up to view your Dank Rank 😉
                             </p>
                         </div>
                     </div>
 
                     {/* View Memes (scrollable) */}
-                    <div className="h-[85vh] basis-[40%] overflow-y-scroll scroll-hide">
+                    <div className="h-[85vh] basis-[40%] overflow-y-scroll scroll-hide='true'">
                         <div className="bg-[#191830] p-10 shadow-md text-center min-h-0 rounded-xl">
                             <div className="space-y-9">
                                 {memes.map((meme) => (
@@ -71,6 +70,7 @@ function HomePage() {
                                         meme={{
                                             title: meme.title,
                                             url: meme.imageUrl,
+                                            postLink: meme.postLink,
                                             voteCount: meme.voteCount,
                                         }}
                                         onUpvote={handleUpvote}
@@ -84,10 +84,28 @@ function HomePage() {
                     {/* Leaderboard */}
                     <div className="h-[85vh] basis-[30%]">
                         <div className="bg-[#191830] p-6 shadow-md text-center h-auto rounded-xl">
-                            <h3 className="text-xl font-semibold mb-2">Leaderboard</h3>
+                            <h3 className="text-2xl font-semibold mb-2">Leaderboard</h3>
                             <p className="text-gray-600 dark:text-gray-400">
                                 Check top voted memes.
                             </p>
+
+                            <div>
+                                {memes
+                                    .sort((a, b) => b.voteCount - a.voteCount) // Sort descending by votes
+                                    .slice(0, 5) // Take top 5
+                                    .map((meme, index) => (
+                                        <LeaderboardCard
+                                            key={index} // use index or a unique id if available
+                                            meme={{
+                                                imageUrl: meme.imageUrl,
+                                                title: meme.title,
+                                                postLink: meme.postLink,
+                                                voteCount: meme.voteCount,
+                                                rank: index + 1,
+                                            }}
+                                        />
+                                    ))}
+                            </div>
                         </div>
                     </div>
                 </div>

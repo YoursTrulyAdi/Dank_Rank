@@ -4,15 +4,16 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-}   
+}
 
 /* Hide scrollbar for Chrome, Safari and Edge */
 .scroll-hide::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 /* Hide scrollbar for Firefox */
 .scroll-hide {
-  scrollbar-width: none; 
-  -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* IE and Edge */
 }

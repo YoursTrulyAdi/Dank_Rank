@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import MemeCard from "../components/MemeCard";
 import { db } from "../../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import LeaderboardCard from "../components/LeaderboardCard";
+import { useNavigate } from "react-router-dom";
+import {
+    getAuth,
+    signOut,
+} from "firebase/auth";
 
 function UserDashboard() {
     const [memes, setMemes] = useState([]);
@@ -28,6 +34,15 @@ function UserDashboard() {
         fetchMemes();
     }, []);
 
+    const signout = async (id) => {
+        const auth = getAuth();
+
+        await signOut(auth);
+
+        //redirection
+        useNavigate("/");
+    };
+
     const handleUpvote = (id) => {
         console.log("Upvote:", id);
         // You can update Firestore here if needed
@@ -41,74 +56,85 @@ function UserDashboard() {
     if (loading) return <p>Loading memes...</p>;
 
     return (
-        <div className="container mx-auto px-6 py-8">
-            {/* Navbar */}
-            <nav className="flex justify-between items-center px-6 py-4 shadow-md bg-white dark:bg-gray-800 fixed top-0 left-0 w-full">
+        <div>
+            <nav className="flex justify-evenly items-center px-6 py-4 shadow-md bg-[#191830]">
                 {/* Logo / Title */}
-                <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                    Meme Voting Arena 🎭
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 flex gap-3 items-center justify-center">
+                    Dank Rank
+                    <img src="/logo.png" alt="logo" className="w-10" />
                 </h1>
 
                 {/* Buttons */}
                 <div className="flex items-center gap-4">
-                    <button className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-green-600">
+                    <button className="px-4 py-2 rounded-xl bg-[#f75990] text-white font-bold transition-transform duration-300 hover:scale-105 cursor-pointer" onClick={signout}>
                         Sign Out
                     </button>
-                    <button className="px-3 py-2 rounded-lg bg-gray-300 dark:bg-gray-700 hover:opacity-80 text-amber-600">
-                        🌙/☀️
-                    </button>
-                    <button className="w-10 h-10 rounded-full bg-gray-300 hover:ring-2 hover:ring-green-500">
-                        <img
-                            src="https://i.pinimg.com/736x/36/95/37/369537d07faab72506f1325d42e650bc.jpg"
-                            alt="Profile"
-                            className="w-full h-full rounded-full object-cover"
-                        />
-                    </button>
-
                 </div>
             </nav>
 
             {/* Main UserDashboard Content */}
-            <main className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-6 my-18">
-                <h2 className="text-3xl font-bold mb-6 text-center">
-                    User Dashboard
-                </h2>
+            <main className="bg-[#2d2b55] text-gray-900 dark:text-gray-100 p-6 h-[93vh] ">
 
-                <div className="flex gap-6">
+                <div className="flex h-fit gap-10">
                     {/* Profile */}
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md text-center basis-[30%]">
-                        <h3 className="text-xl font-semibold mb-2">Profile</h3>
-                        <p className="text-gray-600 dark:text-gray-400">View or update your account details.</p>
+                    <div className="h-[85vh] basis-[30%]">
+                        <div className="bg-[#191830] p-6 shadow-md text-center h-auto rounded-xl">
+                            <h3 className="text-2xl font-semibold mb-2">Profile</h3>
+                            <p className="text-gray-600 dark:text-gray-400">
+                                Sign In / Sign Up to view your Dank Rank 😉
+                            </p>
+                        </div>
                     </div>
 
-                    {/* View Memes */}
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md text-center basis-[40%]">
-                        <h3 className="text-xl font-semibold mb-2">View Memes</h3>
-                        <p className="text-gray-600 dark:text-gray-400">Browse all uploaded memes here.</p>
-
-                        <div>
-                            {memes.map((meme) => (
-                                <MemeCard
-                                    key={meme.id}
-                                    meme={{
-                                        title: meme.title,
-                                        url: meme.imageUrl,
-                                        voteCount: meme.voteCount,
-                                    }}
-                                    onUpvote={handleUpvote}
-                                    onDownvote={handleDownvote}
-                                />
-                            ))}
+                    {/* View Memes (scrollable) */}
+                    <div className="h-[85vh] basis-[40%] overflow-y-scroll scroll-hide='true'">
+                        <div className="bg-[#191830] p-10 shadow-md text-center min-h-0 rounded-xl">
+                            <div className="space-y-9">
+                                {memes.map((meme) => (
+                                    <MemeCard
+                                        key={meme.id}
+                                        meme={{
+                                            title: meme.title,
+                                            url: meme.imageUrl,
+                                            postLink: meme.postLink,
+                                            voteCount: meme.voteCount,
+                                        }}
+                                        onUpvote={handleUpvote}
+                                        onDownvote={handleDownvote}
+                                    />
+                                ))}
+                            </div>
                         </div>
                     </div>
 
                     {/* Leaderboard */}
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md text-center basis-[30%]">
-                        <h3 className="text-xl font-semibold mb-2">Leaderboard</h3>
-                        <p className="text-gray-600 dark:text-gray-400">Check top voted memes.</p>
+                    <div className="h-[85vh] basis-[30%]">
+                        <div className="bg-[#191830] p-6 shadow-md text-center h-auto rounded-xl">
+                            <h3 className="text-2xl font-semibold mb-2">Leaderboard</h3>
+                            <p className="text-gray-600 dark:text-gray-400">
+                                Check top voted memes.
+                            </p>
+
+                            <div>
+                                {memes
+                                    .sort((a, b) => b.voteCount - a.voteCount) // Sort descending by votes
+                                    .slice(0, 5) // Take top 5
+                                    .map((meme, index) => (
+                                        <LeaderboardCard
+                                            key={index} // use index or a unique id if available
+                                            meme={{
+                                                imageUrl: meme.imageUrl,
+                                                title: meme.title,
+                                                postLink: meme.postLink,
+                                                voteCount: meme.voteCount,
+                                                rank: index + 1,
+                                            }}
+                                        />
+                                    ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </main>
         </div>
     );
