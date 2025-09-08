@@ -1,0 +1,21 @@
+{
+  "name": "dank_rank",
+  "version": "1.0.0",
+  "description": "Meme Voting Arena a full-stack platform where users can upload memes, and the community can vote on them.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YoursTrulyAdi/Dank_Rank.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/YoursTrulyAdi/Dank_Rank/issues"
+  },
+  "homepage": "https://github.com/YoursTrulyAdi/Dank_Rank#readme"
+}
