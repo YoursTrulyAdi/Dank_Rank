@@ -1,1 +1,18 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+}   
+
+/* Hide scrollbar for Chrome, Safari and Edge */
+.scroll-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.scroll-hide {
+  scrollbar-width: none; 
+  -ms-overflow-style: none; /* IE and Edge */
+}

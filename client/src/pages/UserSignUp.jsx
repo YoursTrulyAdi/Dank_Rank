@@ -35,21 +35,21 @@ function UserSignUp() {
             })
 
             navigate("/user/dashboard");
-
+            
         }catch(error) {
             console.error("Email and Password Singup failed", error.code, error.message);
             alert(`Error: ${error.message}`); // optional: show error to userconsole.err
         }
     };
-
+    
     const handleGoogleSignIn = async () => {
         try {
             const provider = new GoogleAuthProvider();
             const result = await signInWithPopup(auth, provider);
-
+            
             // Access user info
-            const user = result.user;
-            console.log("Google Sign-In successful:", user);
+            console.log("Google Sign-In successful!");
+            navigate("/user/dashboard");
         } catch (error) {
             console.error("Google Sign-In failed:", error.code, error.message);
             alert(`Error: ${error.message}`); // optional: show error to user
@@ -96,9 +96,15 @@ function UserSignUp() {
 
                     <button
                         type="submit"
-                        className="w-full py-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600">
+                        className="w-full py-2 rounded-lg bg-[#f75990] text-white font-bold transition-transform duration-300 hover:scale-105 cursor-pointer">
                         Sign Up
                     </button>
+
+                    <div className="text-white">
+                        Already a User?
+                        <a href="/user/signin" className="italic text-[#f75990] hover:underline"> Sign In </a> 
+                        Instead
+                    </div>
                 </form>
 
                 {/* Divider */}

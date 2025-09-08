@@ -1,6 +1,16 @@
 import React, { useState } from "react";
+import { auth } from "../../firebase/firebase"; // use this only
+import { useNavigate } from "react-router-dom";
+import {
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup,
+} from "firebase/auth";
 
 function UserSignIn() {
+    //initializing the navigate functions
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -10,15 +20,32 @@ function UserSignIn() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form submitted:", formData);
-        // 👉 Here you’ll integrate with backend later
+
+        try {
+            await signInWithEmailAndPassword(auth, formData.email, formData.password);
+
+            navigate("/user/dashboard");
+
+        } catch (error) {
+            console.error("Email and Password Singup failed", error.code, error.message);
+            alert(`Error: Invalid Credentials`); // optional: show error to userconsole.err
+        }
     };
 
-    const handleGoogleSignIn = () => {
-        console.log("Google Sign-In clicked");
-        // 👉 Integrate Firebase Google Auth here later
+    const handleGoogleSignIn = async () => {
+        try {
+            const provider = new GoogleAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+
+            // Access user info
+            console.log("Google Sign-In successful!");
+            navigate("/user/dashboard");
+        } catch (error) {
+            console.error("Google Sign-In failed:", error.code, error.message);
+            alert(`Error: Incorrect Input`); // optional: show error to user
+        }
     };
 
     return (
@@ -51,9 +78,15 @@ function UserSignIn() {
 
                     <button
                         type="submit"
-                        className="w-full py-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600">
+                        className="w-full py-2 rounded-lg bg-[#f75990] text-white font-bold transition-transform duration-300 hover:scale-105 cursor-pointer">
                         Sign In
                     </button>
+
+                    <div className="text-white">
+                        New User?
+                        <a href="/user/signup" className="italic text-[#f75990] hover:underline"> Sign Up </a>
+                        Instead
+                    </div>
                 </form>
 
                 {/* Divider */}
