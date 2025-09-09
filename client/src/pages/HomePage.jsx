@@ -69,7 +69,7 @@ function HomePage() {
                                         key={meme.id}
                                         meme={{
                                             title: meme.title,
-                                            url: meme.imageUrl,
+                                            imageUrl: meme.imageUrl,
                                             postLink: meme.postLink,
                                             voteCount: meme.voteCount,
                                         }}

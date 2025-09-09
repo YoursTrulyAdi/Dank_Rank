@@ -1,18 +1,16 @@
 const admin = require("firebase-admin");
-require('dotenv').config();
+const path = require("path");
 
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+// Only initialize if no app exists
+if (!admin.apps.length) {
+  const serviceAccount = require(path.resolve(__dirname, "../serviceAccountKey.json"));
 
-// Initialize Firebase Admin
-admin.initializeApp({
+  admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-});
+  });
+}
 
-// Export Firestore and Auth
 const db = admin.firestore();
 const auth = admin.auth();
 
-module.exports = {
-    db,
-    auth,
-};
+module.exports = { db, auth };
