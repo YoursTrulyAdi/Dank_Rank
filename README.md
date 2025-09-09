@@ -10,6 +10,7 @@ A modern meme platform where users can **upload, vote, and track trending memes*
 git clone https://github.com/YoursTrulyAdi/Dank_Rank.git
 
 # to go to the main-program directory
+cd Dank_Rank
 cd client
 
 # To Install all the required libraries
