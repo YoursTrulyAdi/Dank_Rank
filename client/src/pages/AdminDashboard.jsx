@@ -199,13 +199,6 @@ function UserDashboard() {
                     >
                         Upload Meme
                     </button>
-
-                    <button
-                        onClick={() => handleDeleteMeme}
-                        className="mt-10 bg-[#f75990] px-6 py-2 mb-4 rounded-lg hover:scale-105 transition-transform cursor-pointer"
-                    >
-                        Delete Meme
-                    </button>
                 </div>
 
                 {/* Upload Modal */}
