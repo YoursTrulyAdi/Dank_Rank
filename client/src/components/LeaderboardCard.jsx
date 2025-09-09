@@ -1,8 +1,8 @@
 import React from "react";
 
-function LeaderboardCard({meme}) {
+function LeaderboardCard({ meme }) {
     return (
-        <div className="flex items-center gap-4 bg-[#2d2b55] p-4 my-6 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300">
+        <div className="flex items-center gap-4 bg-[#2d2b55] p-4 my-6 rounded-2xl shadow-md hover:scale-105 transition-transform duration-300 sm:w-[80%]">
             {/* Rank */}
             <div className="text-2xl font-bold text-yellow-400 w-10 text-center">
                 #{meme.rank}
@@ -16,9 +16,12 @@ function LeaderboardCard({meme}) {
             />
 
             {/* Meme Info */}
-            <div className="flex-1">
-                <h4 className="text-lg font-semibold text-white">{meme.title}</h4>
+            <div className="flex-1 w-[20%] overflow-hidden">
+                <h4 className="text-lg w-[10%] font-semibold text-white whitespace-nowrap animate-scroll">
+                    {meme.title}
+                </h4>
             </div>
+
 
             {/* Votes */}
             <div className="text-pink-400 font-bold text-lg">

@@ -159,7 +159,7 @@ function UserDashboard() {
     return (
         <div>
             <nav className="flex justify-evenly items-center px-6 py-4 shadow-md bg-[#191830]">
-                <h1 className="text-3xl font-bold text-white flex items-center gap-3">
+                <h1 className="text-3xl font-bold text-white flex items-center justify-center gap-3">
                     Dank Rank
                     <img src="/logo.png" alt="logo" className="w-10" />
                 </h1>
@@ -171,9 +171,9 @@ function UserDashboard() {
                 </button>
             </nav>
 
-            <main className="bg-[#2d2b55] text-white p-6 min-h-[93vh] flex gap-10">
+            <main className="bg-[#2d2b55] text-white p-6 min-h-[93vh] flex gap-10 lg:flex-row">
                 {/* Profile */}
-                <div className="flex flex-col w-[30%] bg-[#191830] rounded-xl shadow-md p-6 items-center  self-start">
+                <div className="flex flex-col w-[30%] bg-[#191830] rounded-xl shadow-md p-6 items-center justify-center self-start ">
                     {user && (
                         <>
                             <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-red-500 shadow-lg">
@@ -211,7 +211,7 @@ function UserDashboard() {
                 {/* Upload Modal */}
                 {showUploadModal && (
                     <div className="fixed inset-0 flex items-center justify-center z-50">
-                        <div className="bg-[#191830] p-6 rounded-xl shadow-xl w-11/12 max-w-md relative">
+                        <div className="bg-[#191830] p-6 rounded-xl shadow-xl w-11/12 max-w-md justify-center items-center relative">
                             <button
                                 onClick={() => setShowUploadModal(false)}
                                 className="absolute top-2 right-2 text-gray-400 hover:text-white"
@@ -261,9 +261,11 @@ function UserDashboard() {
                 </div>
 
                 {/* Leaderboard */}
-                <div className="h-[85vh] basis-[30%]">
-                    <div className="bg-[#191830] p-6 shadow-md rounded-xl">
-                        <h3 className="text-2xl font-semibold mb-2 text-center">Leaderboard</h3>
+                <div className="w-full md:basis-[30%]">
+                    <div className="bg-[#191830] p-4 md:p-6 shadow-md rounded-xl">
+                        <h3 className="text-xl md:text-2xl font-semibold mb-4 text-center text-white">
+                            Leaderboard
+                        </h3>
                         {memes
                             .sort((a, b) => b.voteCount - a.voteCount)
                             .slice(0, 5)
@@ -272,6 +274,7 @@ function UserDashboard() {
                             ))}
                     </div>
                 </div>
+
             </main>
         </div>
     );

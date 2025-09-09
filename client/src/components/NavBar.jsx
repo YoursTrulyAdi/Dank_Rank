@@ -12,7 +12,7 @@ function Navbar() {
     };
 
     return (
-        <div>
+        <div className="[@media(min-width:375px)]:w-full">
             <nav className="flex justify-evenly items-center px-6 py-4 shadow-md bg-[#191830]">
                 {/* Logo / Title */}
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 flex gap-3 items-center justify-center">

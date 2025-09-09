@@ -42,17 +42,20 @@ function HomePage() {
     if (loading) return <p>Loading memes...</p>;
 
     return (
-        <div scroll-hide="true">
+        //  className="overflow-hidden"
+        <div>
             {/* Navbar */}
             <Navbar />
 
             {/* Main UserDashboard Content */}
-            <main className="bg-[#2d2b55] text-gray-900 dark:text-gray-100 p-6 h-[93vh] ">
+            <main className="bg-[#2d2b55] text-white p-6 min-h-[93vh] flex justify-center gap-10">
 
-                <div className="flex h-fit gap-10">
+                {/* [@media(min-width:850px)]: */}
+
+                <div className="flex h-fit flex-col lg:flex-row gap-10">
                     {/* Profile */}
-                    <div className="h-[85vh] basis-[30%]">
-                        <div className="bg-[#191830] p-6 shadow-md text-center h-auto rounded-xl">
+                    <div className="h-[85vh] w-[30%] [@media(min-width:375px)]:w-full [@media(min-width:375px)]:h-max">
+                        <div className="bg-[#191830] p-6 shadow-md text-center h-auto rounded-xl [@media(min-width:375px)]:w-full">
                             <h3 className="text-2xl font-semibold mb-2">Profile</h3>
                             <p className="text-gray-600 dark:text-gray-400">
                                 Sign In / Sign Up to view your Dank Rank 😉
@@ -61,7 +64,7 @@ function HomePage() {
                     </div>
 
                     {/* View Memes (scrollable) */}
-                    <div className="h-[85vh] basis-[40%] overflow-y-scroll scroll-hide='true'">
+                    <div className="h-[85vh] w-[40%] overflow-y-scroll [@media(min-width:375px)]:w-full">
                         <div className="bg-[#191830] p-10 shadow-md text-center min-h-0 rounded-xl">
                             <div className="space-y-9">
                                 {memes.map((meme) => (
@@ -82,14 +85,14 @@ function HomePage() {
                     </div>
 
                     {/* Leaderboard */}
-                    <div className="h-[85vh] basis-[30%]">
+                    <div className="h-[85vh] w-[30%] [@media(min-width:375px)]:w-full">
                         <div className="bg-[#191830] p-6 shadow-md text-center h-auto rounded-xl">
-                            <h3 className="text-2xl font-semibold mb-2">Leaderboard</h3>
+                            <h3 className="text-2xl font-semibold mb-2 ">Leaderboard</h3>
                             <p className="text-gray-600 dark:text-gray-400">
                                 Check top voted memes.
                             </p>
 
-                            <div>
+                            <div className="[@media(min-width:375px)]:w-full flex flex-col items-center">
                                 {memes
                                     .sort((a, b) => b.voteCount - a.voteCount) // Sort descending by votes
                                     .slice(0, 5) // Take top 5
