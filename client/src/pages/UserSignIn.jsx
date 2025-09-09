@@ -90,7 +90,7 @@ function UserSignIn() {
                     </div>
 
                     <div className="text-white">
-                        Are you A User?
+                        Are you an Admin?
                         <a href="/admin/signin" className="italic text-[#f75990] hover:underline"> Admin Sign In </a>
                         Instead
                     </div>

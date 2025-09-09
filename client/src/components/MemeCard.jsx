@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import upArrow from "../assets/up-arrow.png";
 import downArrow from "../assets/down-arrow.png";
 import { auth } from "../../firebase/firebase";
 
-function MemeCard({ meme, onUpvote, onDownvote }) {
+
+function MemeCard({ meme, onUpvote, onDownvote, onDelete }) {
+    const location = useLocation();
+    
     const handleUpvote = () => {
         if (!auth.currentUser) {
             alert("You must sign in first to vote!");
@@ -18,6 +22,16 @@ function MemeCard({ meme, onUpvote, onDownvote }) {
             return;
         }
         onDownvote(meme.id); // 👈 passes meme.id to parent
+    };
+
+    //on delete func
+    const handleDelete = () => {
+        if (!auth.currentUser) {
+            alert("You must sign in first to delete!");
+            return;
+        }
+
+        onDelete(meme.id); // 👈 passes meme.id to parent
     };
 
     return (
@@ -36,8 +50,8 @@ function MemeCard({ meme, onUpvote, onDownvote }) {
             <div className="flex items-center space-x-4">
                 <button
                     className={`px-3 py-2 rounded-lg transition duration-300 ${meme.userVote === "up"
-                            ? "bg-[#f75990] text-white"  // highlighted if upvoted
-                            : "text-green-500 hover:text-green-700"
+                        ? "bg-[#f75990] text-white"  // highlighted if upvoted
+                        : "text-green-500 hover:text-green-700"
                         }`}
                     onClick={handleUpvote}
                 >
@@ -52,8 +66,8 @@ function MemeCard({ meme, onUpvote, onDownvote }) {
 
                 <button
                     className={`px-3 py-2 rounded-lg transition duration-300 ${meme.userVote === "down"
-                            ? "bg-[#f75990] text-white"  // highlighted if downvoted
-                            : "text-red-500 hover:text-red-700"
+                        ? "bg-[#f75990] text-white"  // highlighted if downvoted
+                        : "text-red-500 hover:text-red-700"
                         }`}
                     onClick={handleDownvote}
                 >
@@ -64,6 +78,18 @@ function MemeCard({ meme, onUpvote, onDownvote }) {
                     />
                 </button>
             </div>
+
+            {/* Dustbin/Delete Icon */}
+            {/* Conditionally render delete only on /admin/dashboard */}
+            {location.pathname === "/admin/dashboard" && (
+                <img
+                    src={"/delete.png"}
+                    alt="delete"
+                    className="w-9 relative bottom-10 left-65 opacity-70 hover:scale-105 transition-transform cursor-pointer"
+                    onClick={handleDelete}
+                />
+            )}
+
         </div>
     );
 }

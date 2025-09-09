@@ -5,6 +5,7 @@ import UserSignUp from './pages/UserSignUp'
 import UserSignIn from './pages/UserSignIn';
 import UserDashboard from './pages/UserDashboard';
 import AdminSignIn from './pages/AdminSignIn';
+import AdminDashboard from './pages/AdminDashboard';
 
 import './App.css';
 
@@ -17,8 +18,8 @@ function App() {
                 <Route path="/user/signup" element={<UserSignUp />} />
                 <Route path="/user/signin" element={<UserSignIn />} />
                 <Route path="/user/dashboard" element={<UserDashboard />} />
-
                 <Route path="/admin/signin" element={<AdminSignIn />} />
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
             </Routes>
         </Router>
     )

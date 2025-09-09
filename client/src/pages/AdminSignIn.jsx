@@ -18,12 +18,17 @@ function AdminSignIn() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if(formData.email !== "admin@dankrank.com"){
+            alert("⚔️ You Are Not Authorised Access! ⚔️");
+            return;
+        }
+
         try {
             const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
             const user = userCredential.user;
 
             // User is logged in, navigate to dashboard
-            navigate("/user/dashboard");
+            navigate("/admin/dashboard");
 
         } catch (error) {
             console.error("Email login failed:", error.code, error.message);
