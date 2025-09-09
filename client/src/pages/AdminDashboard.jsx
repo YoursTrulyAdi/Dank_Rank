@@ -158,22 +158,23 @@ function UserDashboard() {
 
     return (
         <div>
-            <nav className="flex justify-evenly items-center px-6 py-4 shadow-md bg-[#191830]">
-                <h1 className="text-3xl font-bold text-white flex items-center justify-center gap-3">
+            {/* Navbar */}
+            <nav className="flex flex-wrap justify-evenly items-center px-6 py-4 shadow-md bg-[#191830]">
+                <h1 className="text-3xl font-bold text-white flex items-center gap-3">
                     Dank Rank
                     <img src="/logo.png" alt="logo" className="w-10" />
                 </h1>
                 <button
-                    className="px-4 py-2 rounded-xl bg-[#f75990] text-white font-bold hover:scale-105 transition-transform cursor-pointer"
+                    className="px-4 py-2 rounded-xl bg-[#f75990] text-white font-bold hover:scale-105 transition-transform mt-4 lg:mt-0"
                     onClick={signout}
                 >
                     Sign Out
                 </button>
             </nav>
 
-            <main className="bg-[#2d2b55] text-white p-6 min-h-[93vh] flex gap-10 lg:flex-row">
+            <main className="bg-[#2d2b55] text-white p-6 flex flex-col lg:flex-row gap-6 lg:gap-10 min-h-[93vh]">
                 {/* Profile */}
-                <div className="flex flex-col w-[30%] bg-[#191830] rounded-xl shadow-md p-6 items-center justify-center self-start ">
+                <div className="flex flex-col w-full lg:w-[30%] bg-[#191830] rounded-xl shadow-md p-6 items-center">
                     {user && (
                         <>
                             <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-red-500 shadow-lg">
@@ -195,52 +196,15 @@ function UserDashboard() {
 
                     <button
                         onClick={() => setShowUploadModal(true)}
-                        className="mt-10 bg-[#f75990] px-6 py-2 rounded-lg hover:scale-105 transition-transform cursor-pointer"
+                        className="mt-6 bg-[#f75990] px-6 py-2 rounded-lg hover:scale-105 transition-transform cursor-pointer"
                     >
                         Upload Meme
                     </button>
                 </div>
 
-                {/* Upload Modal */}
-                {showUploadModal && (
-                    <div className="fixed inset-0 flex items-center justify-center z-50">
-                        <div className="bg-[#191830] p-6 rounded-xl shadow-xl w-11/12 max-w-md justify-center items-center relative">
-                            <button
-                                onClick={() => setShowUploadModal(false)}
-                                className="absolute top-2 right-2 text-gray-400 hover:text-white"
-                            >
-                                ✕
-                            </button>
-                            <h2 className="text-xl font-bold mb-4">Upload Meme</h2>
-                            <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-                                <input
-                                    type="text"
-                                    placeholder="Image URL"
-                                    value={imageUrl}
-                                    onChange={(e) => setImageUrl(e.target.value)}
-                                    className="p-2 rounded"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Title"
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
-                                    className="p-2 rounded"
-                                />
-                                <button
-                                    type="submit"
-                                    className="bg-[#f75990] text-white px-4 py-2 rounded-xl transition-transform duration-300 hover:scale-105 cursor-pointer"
-                                >
-                                    Upload
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                )}
-
                 {/* Memes List */}
-                <div className="h-[85vh] basis-[40%] overflow-y-scroll">
-                    <div className="bg-[#191830] p-10 shadow-md text-center min-h-0 rounded-xl space-y-9">
+                <div className="w-full lg:w-[45%] h-[65vh] lg:h-[85vh] overflow-y-auto">
+                    <div className="bg-[#191830] p-6 shadow-md text-center rounded-xl space-y-6">
                         {memes.map((meme) => (
                             <MemeCard
                                 key={meme.id}
@@ -254,22 +218,61 @@ function UserDashboard() {
                 </div>
 
                 {/* Leaderboard */}
-                <div className="w-full md:basis-[30%]">
+                <div className="w-full lg:w-[25%] h-max lg:h-[85vh]">
                     <div className="bg-[#191830] p-4 md:p-6 shadow-md rounded-xl">
                         <h3 className="text-xl md:text-2xl font-semibold mb-4 text-center text-white">
                             Leaderboard
                         </h3>
-                        {memes
-                            .sort((a, b) => b.voteCount - a.voteCount)
-                            .slice(0, 5)
-                            .map((meme, index) => (
-                                <LeaderboardCard key={meme.id} meme={{ ...meme, rank: index + 1 }} />
-                            ))}
+                        <div className="flex flex-col gap-4">
+                            {memes
+                                .sort((a, b) => b.voteCount - a.voteCount)
+                                .slice(0, 5)
+                                .map((meme, index) => (
+                                    <LeaderboardCard key={meme.id} meme={{ ...meme, rank: index + 1 }} />
+                                ))}
+                        </div>
                     </div>
                 </div>
-
             </main>
+
+            {/* Upload Modal */}
+            {showUploadModal && (
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50">
+                    <div className="bg-[#191830] p-6 rounded-xl shadow-xl w-11/12 max-w-md relative">
+                        <button
+                            onClick={() => setShowUploadModal(false)}
+                            className="absolute top-2 right-2 text-gray-400 hover:text-white"
+                        >
+                            ✕
+                        </button>
+                        <h2 className="text-xl font-bold mb-4">Upload Meme</h2>
+                        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+                            <input
+                                type="text"
+                                placeholder="Image URL"
+                                value={imageUrl}
+                                onChange={(e) => setImageUrl(e.target.value)}
+                                className="p-2 rounded"
+                            />
+                            <input
+                                type="text"
+                                placeholder="Title"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                className="p-2 rounded"
+                            />
+                            <button
+                                type="submit"
+                                className="bg-[#f75990] text-white px-4 py-2 rounded-xl transition-transform duration-300 hover:scale-105 cursor-pointer"
+                            >
+                                Upload
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
+
     );
 }
 
