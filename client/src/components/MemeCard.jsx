@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import upArrow from "../assets/up-arrow.png";
 import downArrow from "../assets/down-arrow.png";
-import { auth } from "../../firebase/firebase"; // import auth
+import { auth } from "../../firebase/firebase";
 
 function MemeCard({ meme, onUpvote, onDownvote }) {
-    const [loading, setLoading] = useState(true);
-
     const handleUpvote = () => {
         if (!auth.currentUser) {
             alert("You must sign in first to vote!");
             return;
         }
-        onUpvote(meme.id);
+        onUpvote(meme.id); // 👈 passes meme.id to parent
     };
 
     const handleDownvote = () => {
@@ -19,7 +17,7 @@ function MemeCard({ meme, onUpvote, onDownvote }) {
             alert("You must sign in first to vote!");
             return;
         }
-        onDownvote(meme.id);
+        onDownvote(meme.id); // 👈 passes meme.id to parent
     };
 
     return (
@@ -36,12 +34,34 @@ function MemeCard({ meme, onUpvote, onDownvote }) {
             <h3 className="text-2xl font-semibold mb-3">{meme.title}</h3>
 
             <div className="flex items-center space-x-4">
-                <button className="text-green-500 hover:text-green-700" onClick={handleUpvote}>
-                    <img src={upArrow} alt="" className="w-7 transition-transform duration-300 hover:scale-115 cursor-pointer" />
+                <button
+                    className={`px-3 py-2 rounded-lg transition duration-300 ${meme.userVote === "up"
+                            ? "bg-[#f75990] text-white"  // highlighted if upvoted
+                            : "text-green-500 hover:text-green-700"
+                        }`}
+                    onClick={handleUpvote}
+                >
+                    <img
+                        src={upArrow}
+                        alt="up"
+                        className="w-7 transition-transform duration-300 hover:scale-115 cursor-pointer"
+                    />
                 </button>
+
                 <span className="font-semibold text-2xl">{meme.voteCount || 0}</span>
-                <button className="text-red-500 hover:text-red-700" onClick={handleDownvote}>
-                    <img src={downArrow} alt="" className="w-7 transition-transform duration-300 hover:scale-115 cursor-pointer" />
+
+                <button
+                    className={`px-3 py-2 rounded-lg transition duration-300 ${meme.userVote === "down"
+                            ? "bg-[#f75990] text-white"  // highlighted if downvoted
+                            : "text-red-500 hover:text-red-700"
+                        }`}
+                    onClick={handleDownvote}
+                >
+                    <img
+                        src={downArrow}
+                        alt="down"
+                        className="w-7 transition-transform duration-300 hover:scale-115 cursor-pointer"
+                    />
                 </button>
             </div>
         </div>

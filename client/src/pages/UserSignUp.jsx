@@ -119,7 +119,7 @@ function UserSignUp() {
                 {/* Google Sign In */}
                 <button
                     onClick={handleGoogleSignIn}
-                    className="w-full py-2 rounded-lg border flex items-center justify-center gap-2 bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-100"
+                    className="w-full py-2 rounded-lg border flex items-center justify-center gap-2 bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-100 transition-transform duration-300 hover:scale-105 cursor-pointer"
                 >
                     <img
                         src="https://www.svgrepo.com/show/355037/google.svg"
