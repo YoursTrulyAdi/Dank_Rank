@@ -48,76 +48,78 @@ function HomePage() {
             <Navbar />
 
             {/* Main UserDashboard Content */}
-            <main className="bg-[#2d2b55] text-white p-6 min-h-[93vh] flex justify-center gap-10">
+            <main className="bg-[#2d2b55] text-white p-6 flex justify-center gap-10">
 
                 {/* [@media(min-width:850px)]: */}
 
-                <div className="flex h-fit flex-col lg:flex-row gap-10">
-                    {/* Profile */}
-                    <div className="h-[85vh] w-[30%] [@media(min-width:375px)]:w-full [@media(min-width:375px)]:h-max">
-                        <div className="bg-[#191830] p-6 shadow-md text-center h-auto rounded-xl [@media(min-width:375px)]:w-full">
-                            <h3 className="text-2xl font-semibold mb-2">Profile</h3>
-                            <p className="text-gray-600 dark:text-gray-400">
-                                Sign In / Sign Up to view your Dank Rank 😉
-                            </p>
-                        </div>
+                <div className="flex h-fit flex-col items-center gap-10 w-[85vw] lg:w-[90vw] lg:flex-row">
+
+                {/* Profile */}
+                <div className="h-max lg:h-[85vh] w-full lg:w-[30%]">
+                    <div className="bg-[#191830] p-6 shadow-md text-center h-auto rounded-xl">
+                        <h3 className="text-2xl font-semibold mb-2">Profile</h3>
+                        <p className="text-gray-600 dark:text-gray-400">
+                            Sign In / Sign Up to view your Dank Rank 😉
+                        </p>
                     </div>
+                </div>
 
-                    {/* View Memes (scrollable) */}
-                    <div className="h-[85vh] w-[40%] overflow-y-scroll [@media(min-width:375px)]:w-full">
-                        <div className="bg-[#191830] p-10 shadow-md text-center min-h-0 rounded-xl">
-                            <div className="space-y-9">
-                                {memes.map((meme) => (
-                                    <MemeCard
-                                        key={meme.id}
-                                        meme={{
-                                            title: meme.title,
-                                            imageUrl: meme.imageUrl,
-                                            postLink: meme.postLink,
-                                            voteCount: meme.voteCount,
-                                        }}
-                                        onUpvote={handleUpvote}
-                                        onDownvote={handleDownvote}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Leaderboard */}
-                    <div className="h-[85vh] w-[30%] [@media(min-width:375px)]:w-full">
-                        <div className="bg-[#191830] p-6 shadow-md text-center h-auto rounded-xl">
-                            <h3 className="text-2xl font-semibold mb-2 ">Leaderboard</h3>
-                            <p className="text-gray-600 dark:text-gray-400">
-                                Check top voted memes.
-                            </p>
-
-                            <div className="[@media(min-width:375px)]:w-full flex flex-col items-center">
-                                {memes
-                                    .sort((a, b) => b.voteCount - a.voteCount) // Sort descending by votes
-                                    .slice(0, 5) // Take top 5
-                                    .map((meme, index) => (
-                                        <LeaderboardCard
-                                            key={index} // use index or a unique id if available
-                                            meme={{
-                                                imageUrl: meme.imageUrl,
-                                                title: meme.title,
-                                                postLink: meme.postLink,
-                                                voteCount: meme.voteCount,
-                                                rank: index + 1,
-                                            }}
-                                        />
-                                    ))}
-                            </div>
+                {/* View Memes (scrollable) */}
+                <div className="h-[85vh] w-full lg:w-[45%] overflow-y-scroll">
+                    <div className="bg-[#191830] p-10 shadow-md text-center min-h-0 rounded-xl">
+                        <div className="space-y-9">
+                            {memes.map((meme) => (
+                                <MemeCard
+                                    key={meme.id}
+                                    meme={{
+                                        title: meme.title,
+                                        imageUrl: meme.imageUrl,
+                                        postLink: meme.postLink,
+                                        voteCount: meme.voteCount,
+                                    }}
+                                    onUpvote={handleUpvote}
+                                    onDownvote={handleDownvote}
+                                />
+                            ))}
                         </div>
                     </div>
                 </div>
 
+                {/* Leaderboard */}
+                <div className="h-max lg:h-[85vh] w-full lg:w-[35%]">
+                    <div className="bg-[#191830] p-6 shadow-md text-center h-auto rounded-xl">
+                        <h3 className="text-2xl font-semibold mb-2">Leaderboard</h3>
+                        <p className="text-gray-600 dark:text-gray-400">
+                            Check top voted memes.
+                        </p>
 
+                        <div className="w-full flex flex-col items-center">
+                            {memes
+                                .sort((a, b) => b.voteCount - a.voteCount)
+                                .slice(0, 5)
+                                .map((meme, index) => (
+                                    <LeaderboardCard
+                                        key={index}
+                                        meme={{
+                                            imageUrl: meme.imageUrl,
+                                            title: meme.title,
+                                            postLink: meme.postLink,
+                                            voteCount: meme.voteCount,
+                                            rank: index + 1,
+                                        }}
+                                    />
+                                ))}
+                        </div>
+                    </div>
+                </div>
 
-
-            </main>
         </div>
+
+
+
+
+            </main >
+        </div >
     );
 }
 
