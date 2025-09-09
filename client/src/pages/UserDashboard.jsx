@@ -139,7 +139,7 @@ function UserDashboard() {
     return (
         <div>
             {/* Navbar */}
-            <nav className="flex justify-between items-center px-6 py-4 shadow-md bg-[#191830] flex-wrap">
+            <nav className="flex justify-evenly items-center px-6 py-4 shadow-md bg-[#191830] flex-wrap">
                 <h1 className="text-3xl font-bold text-white flex items-center gap-3">
                     Dank Rank
                     <img src="/logo.png" alt="logo" className="w-10" />
